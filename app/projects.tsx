@@ -141,7 +141,7 @@ export default function ProjectsScreen() {
 
   const handleShareProject = async (project: Project) => {
     try {
-      const profileUrl = `http://localhost:3000/profile/${project.userId}`;
+      const profileUrl = `https://folks-valley-web.vercel.app/profile/${project.userId}`;
       await Share.share({
         message: `Check out this project: ${project.title}\n${profileUrl}`,
         title: project.title,

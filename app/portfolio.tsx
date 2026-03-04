@@ -52,7 +52,7 @@ export default function PortfolioScreen() {
   const getProfileUrl = () => {
     if (!user) return '';
     const identifier = user.username || user.id;
-    return `http://localhost:3000/profile/${identifier}`;
+    return `https://folks-valley-web.vercel.app/profile/${identifier}`;
   };
 
   const handleShare = async () => {

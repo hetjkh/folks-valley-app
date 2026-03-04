@@ -191,7 +191,7 @@ export default function ProfileScreen() {
       return '';
     }
 
-    const websiteUrl = 'http://localhost:3000';
+    const websiteUrl = 'https://folks-valley-web.vercel.app';
     
     // Use username if available, otherwise fall back to ID
     const identifier = user.username || user.id;

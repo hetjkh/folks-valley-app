@@ -91,7 +91,7 @@ export default function Home() {
           <div className="mt-12 w-full">
             <h2 className="text-2xl font-semibold text-white mb-4">Explore Portfolios</h2>
             <p className="text-gray-400 mb-4">
-              Visit profiles using: <code className="bg-[#1d1d1d] px-2 py-1 rounded">http://localhost:3000/profile/username</code>
+              Visit profiles using: <code className="bg-[#1d1d1d] px-2 py-1 rounded">https://folks-valley-web.vercel.app/profile/username</code>
             </p>
             <p className="text-sm text-gray-500">
               Sign in to like, comment, and follow other users!
