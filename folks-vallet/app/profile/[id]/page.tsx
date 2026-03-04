@@ -67,7 +67,7 @@ interface ProfileData {
   skills: Skill[];
 }
 
-const API_URL = 'http://192.168.1.13:3000/api';
+const API_URL = 'https://folks-valley-backend.onrender.com/api';
 
 async function getProfileData(username: string): Promise<ProfileData | null> {
   try {

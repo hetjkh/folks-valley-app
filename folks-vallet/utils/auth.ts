@@ -1,4 +1,4 @@
-const API_URL = 'http://192.168.1.13:3000/api';
+const API_URL = 'https://folks-valley-backend.onrender.com/api';
 
 export interface User {
   id: string;

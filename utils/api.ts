@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-const API_URL = 'http://192.168.1.13:3000/api';
+const API_URL = 'https://folks-valley-backend.onrender.com/api';
 
 export interface User {
   id: string;
@@ -47,9 +47,9 @@ export const removeToken = async (): Promise<void> => {
 // API call helper
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   const token = await getToken();
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...options.headers,
+    ...(options.headers as Record<string, string>),
   };
 
   if (token) {
@@ -1184,20 +1184,47 @@ export const getAnalytics = async (period: 'day' | 'week' | 'month' = 'week', pr
     throw new Error('Not authenticated');
   }
 
-  const url = `${API_URL}/analytics?period=${period}${projectId ? `&projectId=${projectId}` : ''}`;
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  });
+  try {
+    const url = `${API_URL}/analytics?period=${period}${projectId ? `&projectId=${projectId}` : ''}`;
+    console.log('Fetching analytics from:', url);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to fetch analytics');
+    console.log('Analytics response status:', response.status, response.statusText);
+
+    // Check if response is ok before parsing JSON
+    if (!response.ok) {
+      let errorMessage = 'Failed to fetch analytics';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+        console.error('Analytics error response:', errorData);
+      } catch (e) {
+        // If response is not JSON, use status text
+        errorMessage = response.statusText || `Server error: ${response.status}`;
+        console.error('Analytics non-JSON error:', response.status, response.statusText);
+      }
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    console.log('Analytics data received:', data);
+    return data;
+  } catch (error: any) {
+    console.error('Analytics fetch error:', error);
+    // Handle network errors
+    if (error.message === 'Failed to fetch' || error.message === 'Network request failed' || error.name === 'TypeError') {
+      throw new Error('Network error: Unable to connect to server. Please check your internet connection and ensure the backend is running.');
+    }
+    // Re-throw other errors
+    throw error;
   }
-
-  return data;
 };
 
 // Export analytics data
@@ -1207,17 +1234,36 @@ export const getAnalyticsExport = async (period: 'day' | 'week' | 'month' = 'mon
     throw new Error('Not authenticated');
   }
 
-  const response = await fetch(`${API_URL}/analytics/export?period=${period}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  });
+  try {
+    const response = await fetch(`${API_URL}/analytics/export?period=${period}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to export analytics');
+    // Check if response is ok before parsing JSON
+    if (!response.ok) {
+      let errorMessage = 'Failed to export analytics';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
+      } catch (e) {
+        // If response is not JSON, use status text
+        errorMessage = response.statusText || `Server error: ${response.status}`;
+      }
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    // Handle network errors
+    if (error.message === 'Failed to fetch' || error.message === 'Network request failed') {
+      throw new Error('Network error: Unable to connect to server. Please check your internet connection.');
+    }
+    // Re-throw other errors
+    throw error;
   }
-
-  return data;
 };
