@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --white: #fff;
+  --black: #080808;
+  --light: #cfcfcf;
+  --accent: #e7d9f4;
+  --bonus-accent: #ddd6e9;
+  --dark: #9a9a9a;
+  --dark-purple: #9c8daf;
+  --light-purple: #e0c8ff;
+  --dark-green: #9abc8a;
+  --dark-black: #1d1d1d;
+  --dark-white: #ffffff20;
+  --dark-transparent: #0000008a;
+  --green: rgb(132, 255, 132);
+}
+
+body {
+  font-size: 1em;
+  line-height: 1.4em;
+}
+
+.experi-card {
+  transition: 0.5s;
+}
+
+.experi-card:hover {
+  color: var(--white);
+}
+
+.experi-card:hover .timeline {
+  box-shadow: 0 0 10px 0 var(--light-purple);
+  background: var(--light-purple);
+}
+
+.experi-card:hover .timeline-start,
+.experi-card:hover .timeline-end {
+  box-shadow: 0 0 10px 0 var(--light-purple);
+  background: var(--white);
+  border: 3px solid var(--light-purple) !important;
+}
+
+.experi-card:hover .time-duration {
+  color: var(--light-purple);
+}
+
+.projects-container {
+  column-count: 3;
+  column-gap: 40px;
+  column-fill: balance;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.projects-container > * {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  vertical-align: top;
+  box-sizing: border-box;
+}

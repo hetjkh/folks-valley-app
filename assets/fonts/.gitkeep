@@ -1,0 +1,7 @@
+# This file ensures the fonts directory exists in git
+# Add your Gilroy font files here:
+# - Gilroy-Regular.ttf
+# - Gilroy-Medium.ttf
+# - Gilroy-SemiBold.ttf
+# - Gilroy-Bold.ttf
+

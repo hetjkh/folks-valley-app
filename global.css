@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Set Gilroy as default font family (system-installed) */
+* {
+  font-family: 'Gilroy', 'Gilroy-Regular', 'Gilroy-Medium', 'Gilroy-SemiBold', 'Gilroy-Bold', system-ui, -apple-system, sans-serif;
+}
+
